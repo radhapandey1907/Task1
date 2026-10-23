@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Image Gallery</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>My Image Gallery</h1>
+    <p>Upload, explore and manage your favourite images</p>
+</header>
+
+<main class="container">
+
+    <!-- Upload image -->
+    <section class="panel">
+        <h2>+ Add New Image</h2>
+
+        <form class="upload-form" id="uploadForm">
+            <input
+                type="file"
+                id="imageUpload"
+                accept="image/*"
+                aria-label="Choose an image"
+                required
+            >
+
+            <input
+                type="text"
+                id="imageTitle"
+                placeholder="Enter image title"
+                maxlength="100"
+                required
+            >
+
+            <select id="imageCategory" aria-label="Image category">
+                <option value="nature">Nature</option>
+                <option value="city">City</option>
+                <option value="animals">Animals</option>
+            </select>
+
+            <button type="submit" class="add-btn">
+                + Add Image
+            </button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Delete controls at the top -->
+    <section class="toolbar">
+        <div class="toolbar-left">
+            <button id="deleteModeBtn" type="button">
+                Select Images to Delete
+            </button>
+
+            <button id="selectAllBtn" type="button" hidden>
+                Select All
+            </button>
+        </div>
+
+        <div class="toolbar-right">
+            <span id="selectionCount" aria-live="polite">
+                0 images selected
+            </span>
+
+            <button id="deleteSelectedBtn" type="button" hidden disabled>
+                Delete Selected
+            </button>
+
+            <button id="cancelDeleteBtn" type="button" hidden>
+                Cancel
+            </button>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <nav class="filters" aria-label="Image categories">
+        <button class="filter-btn active" data-filter="all">
+            All Images
+        </button>
+        <button class="filter-btn" data-filter="nature">
+            Nature
+        </button>
+        <button class="filter-btn" data-filter="city">
+            City
+        </button>
+        <button class="filter-btn" data-filter="animals">
+            Animals
+        </button>
+    </nav>
+
+    <!-- Gallery -->
+    <section class="gallery" id="gallery">
+
+        <article class="gallery-item"
+                 data-id="sample-1" data-category="nature">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select Beautiful Mountains">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80"
+                     alt="Beautiful Mountains" loading="lazy">
+            </div>
+            <div class="caption">Beautiful Mountains</div>
+        </article>
+
+        <article class="gallery-item"
+                 data-id="sample-2" data-category="city">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select City Life">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80"
+                     alt="City Life" loading="lazy">
+            </div>
+            <div class="caption">City Life</div>
+        </article>
+
+        <article class="gallery-item"
+                 data-id="sample-3" data-category="animals">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select Cute Dog">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=900&q=80"
+                     alt="Cute Dog" loading="lazy">
+            </div>
+            <div class="caption">Cute Dog</div>
+        </article>
+
+        <article class="gallery-item"
+                 data-id="sample-4" data-category="nature">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select Green Forest">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80"
+                     alt="Green Forest" loading="lazy">
+            </div>
+            <div class="caption">Green Forest</div>
+        </article>
+
+        <article class="gallery-item"
+                 data-id="sample-5" data-category="city">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select Modern Architecture">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80"
+                     alt="Modern Architecture" loading="lazy">
+            </div>
+            <div class="caption">Modern Architecture</div>
+        </article>
+
+        <article class="gallery-item"
+                 data-id="sample-6" data-category="animals">
+            <div class="image-wrap">
+                <input class="selection-check" type="checkbox"
+                       aria-label="Select Golden Retriever">
+                <img class="gallery-image"
+                     src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=900&q=80"
+                     alt="Golden Retriever" loading="lazy">
+            </div>
+            <div class="caption">Golden Retriever</div>
+        </article>
+
+    </section>
+
+    <p class="empty-message" id="emptyMessage">
+        No images found in this category.
+    </p>
+
+</main>
+
+<!-- Image preview -->
+<div class="lightbox" id="lightbox"
+     role="dialog" aria-modal="true"
+     aria-label="Image preview" aria-hidden="true">
+
+    <button class="close-btn" id="closeBtn"
+            type="button" aria-label="Close preview">×</button>
+
+    <img id="lightboxImg" src="" alt="">
+
+    <p id="imageCaption"></p>
+
+    <div class="lightbox-controls">
+        <button class="nav-btn" id="prevBtn" type="button">
+            ❮ Previous
+        </button>
+
+        <button class="nav-btn" id="nextBtn" type="button">
+            Next ❯
+        </button>
+    </div>
+</div>
+
+    <script src="script.js" defer></script>
+
+</body>
+</html>
